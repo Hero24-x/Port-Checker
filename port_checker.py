@@ -1,16 +1,24 @@
+```python
 import socket
 
 host = input("Enter Host/IP: ")
-port = int(input("Enter Port: "))
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.settimeout(3)
+ports = [21, 22, 25, 53, 80, 110, 143, 443, 445, 3306]
 
-result = sock.connect_ex((host, port))
+print(f"\nScanning {host}...\n")
 
-if result == 0:
-    print(f"[+] Port {port} is OPEN")
-else:
-    print(f"[-] Port {port} is CLOSED")
+for port in ports:
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.settimeout(1)
 
-sock.close()
+    result = sock.connect_ex((host, port))
+
+    if result == 0:
+        print(f"[OPEN]   Port {port}")
+    else:
+        print(f"[CLOSED] Port {port}")
+
+    sock.close()
+
+print("\nScan Complete.")
+```
